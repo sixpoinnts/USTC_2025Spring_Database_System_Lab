@@ -1,0 +1,2 @@
+# USTC_2025Spring_Database_System_Lab
+中国科学技术大学《数据库系统与应用》课程实验
