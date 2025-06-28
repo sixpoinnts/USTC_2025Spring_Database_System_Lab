@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<base href="./">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教师教学科研登记系统</title>
+<style>
+.author1 {
+    width: 190px;
+    height: 80px;
+    float: right
+}
+</style>
+<link href="{{ url_for('static', filename='style1.css') }}" rel="stylesheet">
+<link href="css/bootstrap-4.4.1.css" rel="stylesheet" type="text/css">
+<script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-118965717-3');
+      gtag('config', 'UA-118965717-5');
+    </script>
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+<header class="app-header navbar">
+  <header class="app-header navbar"><span class="badge badge-light">数据库系统及应用Lab</span></header>
+</header>
+<div class="app-body">
+<div class="sidebar">
+  <nav class="sidebar-nav">
+    <ul class="nav">
+      <li class="nav-title">教师教学科研登记系统</li>
+      <a class="nav-link" href="index"> <i class="nav-icon icon-speedometer"></i> 首页 </a>
+      <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="teacher"> <i class="nav-icon icon-puzzle"></i> 教师管理</a> </li>
+      <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="paper"> <i class="nav-icon icon-cursor"></i> 发表论文情况管理</a> </li>
+      <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="project"> <i class="nav-icon icon-cursor"></i> 承担项目情况管理</a> </li>
+      <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="class"> <i class="nav-icon icon-star"></i> 主讲课程情况管理</a> </li>
+      <li class="nav-item"> <a class="nav-link nav-dropdown-toggle" href="search"> <i class="nav-icon icon-star"></i> 查询与导出</a> </li>
+    </ul>
+  </nav>
+  <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+</div>
+<main class="main">
+<div class="container-fluid">
+  <div class="animated fadeIn">
+    <div class="row"> </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-5 col-lg-6">
+            <div class="clearfix">
+              <h1 class="pt-3" >教师教学科研登记系统</h1>
+              <p class="text-muted"></p>
+            </div>
+          </div>
+        </div>
+        <div class="chart-wrapper" style="height:430px;margin-top:20px;"> </div>
+        <div class="author1">
+          <p class="text-muted">蔡孟辛 PB22111695</p>
+          <p class="text-muted" >cylia_6@mail.ustc.edu.cn</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

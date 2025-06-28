@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<base href="./">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>教师教学科研登记系统</title>
+<link href="{{ url_for('static', filename='style1.css') }}" rel="stylesheet">
+<script>
+    function tableFilter() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("prependedInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("teacher-table");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    function openForm(key) {
+      var form = document.getElementById("updateForm");
+      form.style.display = "block";
+      update_form.key.value = key;
+    }
+
+    function closeForm() {
+      document.getElementById("updateForm").style.display = "none";
+    }
+
+    function openwForm(key) {
+      document.getElementById("deleteWarning").style.display = "block";
+      delete_form.key.value = key;
+    }
+
+    function closewForm() {
+      document.getElementById("deleteWarning").style.display = "none";
+    } 
+  </script>
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+<div class="form-popup" id="updateForm">
+  <form class="form-container" name="update_form" method="POST">
+    <h1>更新表单</h1>
+    <input type="hidden" name="key" value="">
+    <input type="hidden" name="type" value="update">
+
+    <div class="form-group">
+      <label for="teacher_name">姓名</label>
+      <input type="text" class="form-control" placeholder="姓名" name="teacher_name" required="">
+    </div>
+    
+    <div class="form-group">
+      <label for="teacher_sexual">性别</label>
+      <select class="form-control" name="teacher_sexual" required>
+        <option value="" disabled selected>性别</option>
+        <option value="1">男</option>
+        <option value="2">女</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="teacher_type">职称</label>
+      <select class="form-control" name="teacher_type" required>
+        <option value="" disabled selected>职称</option>
+        <option value="1">博士后</option>
+        <option value="2">助教</option>
+        <option value="3">讲师</option>
+        <option value="4">副教授</option>
+        <option value="5">特任教授</option>
+        <option value="6">教授</option>
+        <option value="7">助理研究员</option>
+        <option value="8">特任副研究员</option>
+        <option value="9">副研究员</option>
+        <option value="10">特任研究员</option>
+        <option value="11">研究员</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success" value="Refresh Page" onclick="window.location.reload();">确认</button>
+    <button type="button" class="btn bg-danger" onclick="closeForm()">取消</button>
+  </form>
+</div>
+
+<div class="form-popup" id="deleteWarning">
+  <form class="form-container" name="delete_form" method="POST">
+    <p> </p>
+    <h2>确认删除？</h2>
+    <p> </p>
+    <p> </p>
+    <input type="hidden" name="type" value="delete">
+    <input type="hidden" name="key" value="">
+    <button type="submit" class="btn btn-success" value="Refresh Page" onclick="window.location.reload();">确认</button>
+    <button type="button" class="btn bg-danger" onclick="closewForm();">取消</button>
+  </form>
+</div>
+<header class="app-header navbar"><span class="badge badge-light">数据库系统及应用Lab</span> </header>
+<div class="app-body">
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="nav">
+        <li class="nav-title">教师教学科研登记系统</li>
+        <a class="nav-link" href="index"> <i class="nav-icon icon-speedometer"></i> 首页 </a> <a class="nav-link" href="teacher"> <i class="nav-icon icon-pie-chart"></i> 教师管理</a>
+        <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="paper"> <i class="nav-icon icon-cursor"></i> 发表论文情况管理</a> </li>
+        <li class="nav-item"> </li>
+        <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="project"> <i class="nav-icon icon-cursor"></i> 承担项目情况管理</a> </li>
+        <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="class"> <i class="nav-icon icon-star"></i> 主讲课程情况管理</a> </li>
+      <li class="nav-item"> <a class="nav-link nav-dropdown-toggle" href="search"> <i class="nav-icon icon-star"></i> 查询与导出</a> </li>
+      </ul>
+    </nav>
+    <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+  </div>
+  <main class="main">
+    <div class="container-fluid">
+      <div class="animated fadeIn">
+
+        <div class="input-prepend input-group">
+          <div class="input-group-prepend">
+            <div class="insert-container">
+              <form class="form-insert" method="POST">
+                <input type="hidden" name="type" value="query">
+                <input type="text" placeholder="工号" name="id">
+                <input type="text" placeholder="姓名" name="name">
+                <input type="text" placeholder="性别" name="sexual">
+                <input type="text" placeholder="职称" name="t_type">
+                
+                <button class="btn btn-info" type="submit">查询</button> 
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-5">
+                <h4 class="card-title mb-0">教师信息</h4>
+              </div>
+            </div>
+            <div>             
+              <div>
+                <table id="teacher-table">
+                  <tr> {% for i in labels %}
+                    <th> {{ i }} </th>
+                    {% endfor %}
+                    <th>操作</th>
+                  </tr>
+                  {% for i in content %}
+                  <tr id="{{ i.T_ID }}">
+                    <td> {{ i.T_ID }} </td>
+                    <td> {{ i.T_Name }} </td>
+                    <td> {{ i.T_sexual }} </td>
+                    <td> {{ i.T_type }} </td>
+                    <td><label class="btn btn-success" onclick="openForm(this.parentNode.parentNode.id)">更新</label>
+                      <label class="btn bg-danger" onclick="openwForm(this.parentNode.parentNode.id)">删除</label></td>
+                  </tr>
+                  {% endfor %}
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="insert-container">
+              <form class="form-insert" method="POST">
+                  <input type="hidden" name="type" value="insert">
+                  
+                  <div class="form-group me-2" style="width: 200px;">
+                      <input type="text" placeholder="工号" name="id" required="" class="form-control">
+                  </div>
+                  
+                  <div class="form-group me-2" style="width: 200px;">
+                      <input type="text" placeholder="姓名" name="name" required="" class="form-control">
+                  </div>
+                  
+                  <div class="form-group me-2" style="width: 120px;">
+                      <select name="sexual" required="" class="form-control">
+                          <option value="" disabled selected>性别</option>
+                          <option value="1">男</option>
+                          <option value="2">女</option>
+                      </select>
+                  </div>
+                  
+                  <div class="form-group me-2" style="width: 120px;">
+                      <select name="t_type" required="" class="form-control">
+                          <option value="" disabled selected>职称</option>
+                          <option value="1">博士后</option>
+                          <option value="2">助教</option>
+                          <option value="3">讲师</option>
+                          <option value="4">副教授</option>
+                          <option value="5">特任教授</option>
+                          <option value="6">教授</option>
+                          <option value="7">助理研究员</option>
+                          <option value="8">特任副研究员</option>
+                          <option value="9">副研究员</option>
+                          <option value="10">特任研究员</option>
+                          <option value="11">研究员</option>
+                      </select>
+                  </div>
+                  <button class="btn btn-warning" type="submit">添加</button>
+              </form>
+          </div>
+      </div>
+
+      </div>
+    </div>
+  </main>
+  <aside class="aside-menu">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab"> <i class="icon-list"></i> </a> </li>
+      <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"> <i class="icon-speech"></i> </a> </li>
+      <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab"> <i class="icon-settings"></i> </a> </li>
+    </ul>    
+  </aside>
+</div>
+</body>
+</html>

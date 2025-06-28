@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<base href="./">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>教师教学科研登记系统</title>
+<link href="{{ url_for('static', filename='style1.css') }}" rel="stylesheet">
+<script>
+    function tableFilter() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("prependedInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("table");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    // function exportToPdf() {
+    //     var form = document.querySelector('.form-insert');
+    //     var formData = new FormData(form);
+    //     fetch('/export_pdf', {
+    //         method: 'POST',
+    //         body: formData
+    //     }).then(response => response.blob())
+    //     .then(blob => {
+    //         var url = window.URL.createObjectURL(blob);
+    //         var a = document.createElement('a');
+    //         a.href = url;
+    //         a.download = 'output.pdf';
+    //         document.body.appendChild(a);
+    //         a.click();
+    //         a.remove();
+    //     });
+    // }
+  </script>
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+<header class="app-header navbar"><span class="badge badge-light">数据库系统及应用Lab</span> </header>
+<div class="app-body">
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="nav">
+        <li class="nav-title">教师教学科研登记系统</li>
+        <a class="nav-link" href="index"> <i class="nav-icon icon-speedometer"></i> 首页 </a>
+        <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="teacher"> <i class="nav-icon icon-puzzle"></i> 教师管理</a> </li>
+        <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="paper"> <i class="nav-icon icon-cursor"></i> 发表论文情况管理</a> </li>
+        <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="project"> <i class="nav-icon icon-star"></i> 承担项目情况管理</a> </li>
+        <li class="nav-item nav-dropdown"> <a class="nav-link nav-dropdown-toggle" href="class"> <i class="nav-icon icon-star"></i> 主讲课程情况管理</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="search"> <i class="nav-icon icon-star"></i> 查询与导出</a> </li>
+        <span class="badge badge-primary"></span> </a> </li>
+      </ul>
+    </nav>
+    <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+  </div>
+
+  <main class="main">
+    <div class="container-fluid">
+      <div class="animated fadeIn">
+
+        <div class="input-prepend input-group">
+          <div class="input-group-prepend">
+            <div class="insert-container">
+                <form class="form-insert" method="POST">
+                    <input type="hidden" name="type" value="query">
+                    <input type="text" placeholder="工号" name="id">
+                    <input type="text" placeholder="年份开始" name="fromyear">
+                    <input type="text" placeholder="年份结束" name="endyear">
+                    <button class="btn btn-info" type="submit">查询</button> 
+                </form>
+                <form class="form-insert" method="POST">
+                    <input type="hidden" name="type" value="export">
+                    <input type="text" placeholder="工号" name="id">
+                    <input type="text" placeholder="年份开始" name="fromyear">
+                    <input type="text" placeholder="年份结束" name="endyear">
+                    <button class="btn btn-success">导出PDF</button>
+                </form>
+            </div>
+          </div>
+        </div>
+
+        
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-5">
+                <h4 class="card-title mb-0">教师信息</h4>
+              </div>
+            </div>
+            <div>             
+              <div>
+                <table id="table">
+                  <tr> {% for i in labels_teacher %}
+                    <th> {{ i }} </th>
+                    {% endfor %}
+                  </tr>
+                  {% for i in content1 %}
+                  <tr id="{{ i.T_ID }}">
+                    <td> {{ i.T_ID }} </td>
+                    <td> {{ i.T_Name }} </td>
+                    <td> {{ i.T_sexual }} </td>
+                    <td> {{ i.T_type }} </td>
+                  </tr>
+                  {% endfor %}
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h4 class="card-title mb-0">论文信息</h4>
+                </div>
+              </div>
+              <div>             
+                <div>
+                  <table id="table">
+                    <tr> {% for i in labels_paper %}
+                      <th> {{ i }} </th>
+                      {% endfor %}
+                    </tr>
+                    {% for i in content2 %}
+                    <tr id="{{ i.T_ID }}">
+                      <td> {{ i.T_ID }} </td>
+                      <td> {{ i.P_Name }} </td>
+                      <td> {{ i.P_Url }} </td>
+                      <td> {{ i.P_Year }} </td>
+                      <td> {{ i.P_Type }} </td>
+                      <td> {{ i.P_Level }} </td>
+                      <td> {{ i.P_Rank }} </td>
+                      <td> {{ i.P_Contact }} </td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h4 class="card-title mb-0">项目信息</h4>
+                </div>
+              </div>
+              <div>             
+                <div>
+                  <table id="table">
+                    <tr> {% for i in labels_project %}
+                      <th> {{ i }} </th>
+                      {% endfor %}
+                    </tr>
+                    {% for i in content3 %}
+                    <tr id="{{ i.T_ID }}">
+                      <td> {{ i.T_ID }} </td>
+                      <td> {{ i.Pr_Name }} </td>
+                      <td> {{ i.Pr_Source }} </td>
+                      <td> {{ i.Pr_Type }} </td>
+                      <td> {{ i.Pr_Summoney }} </td>
+                      <td> {{ i.Pr_From }} </td>
+                      <td> {{ i.Pr_End }} </td>
+                      <td> {{ i.Pr_money }} </td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h4 class="card-title mb-0">授课信息</h4>
+                </div>
+              </div>
+              <div>             
+                <div>
+                  <table id="table">
+                    <tr> {% for i in labels_class %}
+                      <th> {{ i }} </th>
+                      {% endfor %}
+                    </tr>
+                    {% for i in content4 %}
+                    <tr id="{{ i.T_ID }}">
+                      <td> {{ i.C_ID }} </td>
+                      <td> {{ i.T_ID }} </td>
+                      <td> {{ i.C_Name }} </td>
+                      <td> {{ i.C_Sum }} </td>
+                      <td> {{ i.C_Type }} </td>
+                      <td> {{ i.C_Year }} </td>
+                      <td> {{ i.C_Semester }} </td>
+                      <td> {{ i.C_hours }} </td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+                </div>
+              </div>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+  <aside class="aside-menu">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab"> <i class="icon-list"></i> </a> </li>
+      <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"> <i class="icon-speech"></i> </a> </li>
+      <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab"> <i class="icon-settings"></i> </a> </li>
+    </ul>    
+  </aside>
+</div>
+</body>
+</html>
